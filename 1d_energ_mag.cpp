@@ -58,4 +58,15 @@ int main() {
             results.emplace_back(step, total_energy, magnetization);
         }
     }
+
+    // Write results to a csv file.
+    std::ofstream file("ising_results.csv");
+    file << "Step,Energy,Magnetization\n";
+    for (const auto& [step, energy, magnetization] : results) {
+        file << step << "," << energy << "," << magnetization << "\n";
+    }
+    file.close();
+
+    std::cout << "Simulation complete. Results saved to ising_results.csv\n";
+    
 }
