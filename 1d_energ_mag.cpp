@@ -62,7 +62,7 @@ int main() {
     }
 
     auto [step, final_energy, final_magnetisation] = results.back();  // unpacks tuple and stores values as variables
-    std::cout<< "\n<======================SUMMARY DATA ======================>" // prints out values in a neat way
+    std::cout<< "\n<======================SUMMARY DATA (1D) ======================>" // prints out values in a neat way 
              << "\nTotal Energy: " << final_energy 
              << "\nTotal Magnetism: "<< final_magnetisation 
              << "\n<=========================================================>" 
