@@ -18,4 +18,6 @@ run_2d: 2d_results
 	./2d_results
 
 clean:
-	rm -f *.o results ising_results.csv ising_results_2D.csv common_parameters.h.gch 
+	rm -f *.o 1d_results ising_results.csv ising_results_2D.csv common_parameters.h.gch 2d_results 
+
+## clean function improved in order to remove '1d/2d_results' files properly 
