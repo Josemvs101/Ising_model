@@ -4,11 +4,11 @@
 #include <fstream>
 #include <cmath>
 
-const int N = 3; // Number of atoms (to test if produced energy values output 0,-2,2)
+const int N = 100; // Number of atoms (dimensions required for 1D chain)
 const int steps = 10000; // Number of Monte Carlo steps
 const int J = 1; // Coupling constant (as instructed)
 const double kT = 2.5; // Temperature factor (k_B * T)
-const int output_interval = 1; // Save every step
+const int output_interval = 10; // Save every step (increased to 10 as N increased)
 
 int main() {
     std::vector<int> spins(N);
@@ -43,11 +43,11 @@ int main() {
 
         if (step % output_interval == 0) {
             int total_energy = 0;
-            int magnetization = 0; // initial parameters
+            int magnetisation = 0; // initial parameters
             
             // Calculate magnetization
             for (int s : spins) {
-                magnetization += s;
+                magnetisation += s;
             }
             
             // Calculate energy for open chain (N-1 bonds)
@@ -55,18 +55,27 @@ int main() {
                 total_energy += -J * spins[j] * spins[j + 1]; // total energy 
             }
             
-            results.emplace_back(step, total_energy, magnetization);
+            results.emplace_back(step, total_energy, magnetisation); // tuple
+            
+            
         }
     }
 
+    auto [step, final_energy, final_magnetisation] = results.back();  // unpacks tuple and stores values as variables
+    std::cout<< "\n<======================SUMMARY DATA ======================>" // prints out values in a neat way
+             << "\nTotal Energy: " << final_energy 
+             << "\nTotal Magnetism: "<< final_magnetisation 
+             << "\n<=========================================================>" 
+             << std::endl;
     // Write results to a csv file.
     std::ofstream file("ising_results.csv");
-    file << "Step,Energy,Magnetization\n";
-    for (const auto& [step, energy, magnetization] : results) {
-        file << step << "," << energy << "," << magnetization << "\n";
+    file << "Step,Energy,Magnetisation\n";
+    for (const auto&[step, energy, magnetisation] : results) {
+        file << step << "," << energy << "," << magnetisation << "\n";
     }
     file.close();
 
     std::cout << "Simulation complete. Results saved to ising_results.csv\n";
+    
     
 }
