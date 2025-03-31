@@ -12,5 +12,5 @@ std::mt19937 gen(rd());
 extern std::uniform_real_distribution<double> prob_dist;
 
 // Vacancy (defects) probability dist
-const double defect_probability = 0.25; // sets chance of vacant site to x%
+const double defect_probability = 0.125; // sets chance of vacant site to x%
 

@@ -7,7 +7,7 @@
 const int N = 100; // Number of atoms (dimensions required for 1D chain)
 const int steps = 10000; // Number of Monte Carlo steps
 const int J = 1; // Coupling constant (as instructed)
-const double kT = 2.5; // Temperature factor (k_B * T)
+const double kT = 25; // Temperature factor (k_B * T)
 const int output_interval = 10; // Save every step (increased to 10 as N increased)
 
 int main() {
@@ -60,11 +60,26 @@ int main() {
             
         }
     }
+    // Compute averages since enery and mag values are already calculated
+    double avg_energy = 0.0;
+    double avg_magnetisation = 0.0;
+
+    for (const auto& [step, energy, magnetisation] : results) { 
+        avg_energy += energy;
+        avg_magnetisation += magnetisation; // This will find average values for one config
+    }
+
+        avg_energy /= results.size();
+        avg_magnetisation /= results.size(); // We can now manually run different configurations and find 
+        // average values over a number of configs. 
+
 
     auto [step, final_energy, final_magnetisation] = results.back();  // unpacks tuple and stores values as variables
     std::cout<< "\n<======================SUMMARY DATA (1D) ======================>" // prints out values in a neat way 
              << "\nTotal Energy: " << final_energy 
              << "\nTotal Magnetism: "<< final_magnetisation 
+             << "\nAverage Energy: " << avg_energy
+             << "\nAverage Magnetism: " << avg_magnetisation
              << "\n<=========================================================>" 
              << std::endl;
     // Write results to a csv file.
